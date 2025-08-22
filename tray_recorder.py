@@ -155,7 +155,7 @@ class TrayRecorder:
             item('Start Recording (Ctrl+Shift+R)', self.start_recording, enabled=lambda item: not self.recording),
             item('Stop Recording', self.stop_recording, enabled=lambda item: self.recording),
             pystray.Menu.SEPARATOR,
-            item('Send Files Manually', self.open_manual_sender),
+
             item('Test Audio Devices', self.test_audio_devices),
             item('Open Audio Folder', self.open_audio_folder),
             pystray.Menu.SEPARATOR,
@@ -179,7 +179,7 @@ class TrayRecorder:
                 item('Start Recording (Ctrl+Shift+R)', self.start_recording, enabled=lambda item: not self.recording),
                 item('Stop Recording', self.stop_recording, enabled=lambda item: self.recording),
                 pystray.Menu.SEPARATOR,
-                item('Send Files Manually', self.open_manual_sender),
+    
                 item('Test Audio Devices', self.test_audio_devices),
                 item('Open Audio Folder', self.open_audio_folder),
                 pystray.Menu.SEPARATOR,
@@ -366,25 +366,9 @@ class TrayRecorder:
         finally:
             self.update_icon_status(False, "Ready")
     
-    def open_manual_sender(self):
-        """Open manual file sender"""
-        try:
-            script_dir = Path(__file__).parent
-            subprocess.Popen([
-                'python', str(script_dir / 'send_file_manually.py')
-            ], creationflags=subprocess.CREATE_NEW_CONSOLE)
-        except Exception as e:
-            print(f"Error opening manual sender: {e}")
-    
     def test_audio_devices(self):
-        """Open audio device tester"""
-        try:
-            script_dir = Path(__file__).parent
-            subprocess.Popen([
-                'python', str(script_dir / 'test_ffmpeg_devices.py')
-            ], creationflags=subprocess.CREATE_NEW_CONSOLE)
-        except Exception as e:
-            print(f"Error opening device tester: {e}")
+        """Audio device tester (feature removed for simplicity)"""
+        self.show_notification("Audio Test", "Device testing feature was removed for simplicity")
     
     def open_audio_folder(self):
         """Open the audio output folder"""

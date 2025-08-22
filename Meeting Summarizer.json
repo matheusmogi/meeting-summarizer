@@ -1,0 +1,190 @@
+{
+  "name": "Meeting Summarizer",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "644fd1d7-08d2-4a98-b249-a695114a7aa0",
+        "authentication": "basicAuth",
+        "options": {
+          "binaryPropertyName": "data",
+          "ignoreBots": false,
+          "noResponseBody": true
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -896,
+        -64
+      ],
+      "id": "d084bb00-1b22-41c0-ab49-7d9f89255846",
+      "name": "Webhook",
+      "webhookId": "644fd1d7-08d2-4a98-b249-a695114a7aa0",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "Wbtz3tdEFdidui0J",
+          "name": "basic credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash-lite"
+        },
+        "inputType": "binary",
+        "binaryPropertyName": "data0",
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        -64
+      ],
+      "id": "e071173f-0da2-49f1-9435-a482f71c8757",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ptafgViIfNGlNiwp",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "value": "https://www.notion.so/N8N-25574da84abd80208de8e5f592afa808",
+          "mode": "url"
+        },
+        "title": "=Meeting Summary {{ $now.format('dd/MM/yyyy HH:mm') }}",
+        "simple": false,
+        "blockUi": {
+          "blockValues": [
+            {
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "={{ $json.content[0].text }}",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        -64
+      ],
+      "id": "d6fe4580-dc93-4bb6-8a6e-f86580bbc136",
+      "name": "Create a page",
+      "retryOnFail": true,
+      "executeOnce": true,
+      "credentials": {
+        "notionApi": {
+          "id": "zXxitcXTLLEPiV7h",
+          "name": "N8N connection"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-3-5-haiku-20241022",
+          "mode": "list",
+          "cachedResultName": "claude-3-5-haiku-20241022"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Summarize this audio-transcribed text, naming the people who said and finishing with highlights and \"next actions\" if needed. \n**Special highlight whenever someone mentions me *Matheus***\n- use emojis where it suits\n- use a human friendly language\n<input>\n {{ $json.candidates[0].content.parts[0].text }}\n</input>\n<example>\nSummary\n- Sean is working in the feature XYZ, and he is blocked by task assigned to John.\n- John will finish his task this afternoon but he needs Matheus review his code first.\n- Mark will work in a PoC about service bus\n\nAtention \n - You need to code review John's task to unblock Sean\n\nTaking Actions\n - Mark will work in PoC\n</example>"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 1024
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -64
+      ],
+      "id": "c948b106-3526-4eb8-a4e5-4de9f31a2ebe",
+      "name": "Message a model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "Te0yLQo4Jw6A8aaV",
+          "name": "Anthropic account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a page": {
+      "main": [
+        []
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "79196b26-283e-46b4-8ab0-720f7f04f9c2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f4b942e088e39a7854b9d30242e1195d0faef0b0ff12bf0d2a643a8f7e485603"
+  },
+  "id": "EoPhKN3Pq6G3emck",
+  "tags": []
+}

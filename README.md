@@ -10,44 +10,22 @@ Professional audio recording system that captures **microphone + system audio** 
 meeting-recorder/
 ├── 📄 config.example.json             # Configuration template
 ├── 🎙️ tray_recorder.py                # System tray application ⭐
-├── 🚀 start-tray-recorder.bat         # Tray launcher (recommended)
-├── 🎙️ ffmpeg_recorder.py              # Direct FFmpeg recorder
-├── 🚀 start-ffmpeg-recording.bat      # Direct recording launcher
-├── 📤 send_file_manually.py           # Manual file sender  
-├── 🚀 send-files.bat                  # Manual sender launcher
-├── 🔧 create_startup_shortcut.py      # Add to Windows startup
-├── 📚 FFMPEG_RECORDER_README.md       # Detailed FFmpeg recorder docs
-├── 📚 MANUAL_FILE_SENDER.md           # Manual sender docs
+├── 🚀 start-tray-recorder.bat         # Tray launcher
 ├── 📚 TRAY_RECORDER_GUIDE.md          # System tray recorder guide
 └── 📁 audio/                          # Output folder for recordings
 ```
 
 ## 🚀 **Quick Start**
 
-### **System Tray** (Recommended) ⭐
+### **System Tray Application** ⭐
 ```cmd
 start-tray-recorder.bat
 ```
 - **Microphone icon** in system tray
 - **Hotkey:** Ctrl+F12 (or Ctrl+Fn+F12) to start/stop
-- **Right-click** tray icon for menu
+- **Right-click** tray icon for menu options
 - **Auto-upload** and delete after recording
-
-### **Direct Recording**
-```cmd
-start-ffmpeg-recording.bat
-```
-- Records microphone + system audio
-- Press Ctrl+C to stop
-- Automatically uploads to N8N and deletes file
-
-### **Send Files Manually**
-```cmd
-send-files.bat
-```
-- Send existing WAV files immediately
-- Interactive menu or batch upload
-- Files deleted after successful upload
+- **All-in-one solution** - no need for separate utilities
 
 ## ⚙️ **Configuration**
 
@@ -108,14 +86,12 @@ ffmpeg -f dshow
 - `metadata` field: JSON with file info and timestamps
 - **Authentication**: Basic Auth from config.json
 
-## 🛠️ **Available Tools**
+## 🛠️ **Main Application**
 
 | File | Purpose | Usage |
 |------|---------|-------|
-| `start-tray-recorder.bat` | **System tray app** ⭐ | Always-on tray icon with hotkey |
-| `start-ffmpeg-recording.bat` | **Direct recorder** | Command-line recording |
-| `send-files.bat` | **Manual sender** | Send existing files immediately |
-| `create_startup_shortcut.py` | **Startup setup** | Add to Windows startup |
+| `start-tray-recorder.bat` | **System tray app** ⭐ | Complete recording solution with hotkey |
+| `tray_recorder.py` | **Core application** | Python script (launched by batch file) |
 
 ## ✅ **Features**
 
@@ -140,8 +116,7 @@ ffmpeg -f dshow
 
 ## 📖 **Detailed Documentation**
 
-- **FFmpeg Recorder**: See `FFMPEG_RECORDER_README.md`
-- **Manual File Sender**: See `MANUAL_FILE_SENDER.md`
+- **System Tray Recorder**: See `TRAY_RECORDER_GUIDE.md`
 
 ---
 
