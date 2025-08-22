@@ -8,17 +8,17 @@ Professional audio recording system that captures **microphone + system audio** 
 
 ```
 meeting-recorder/
-├── 📄 config.json                     # Configuration (webhook, credentials)
+├── 📄 config.example.json             # Configuration template
 ├── 🎙️ tray_recorder.py                # System tray application ⭐
 ├── 🚀 start-tray-recorder.bat         # Tray launcher (recommended)
 ├── 🎙️ ffmpeg_recorder.py              # Direct FFmpeg recorder
 ├── 🚀 start-ffmpeg-recording.bat      # Direct recording launcher
 ├── 📤 send_file_manually.py           # Manual file sender  
 ├── 🚀 send-files.bat                  # Manual sender launcher
-├── 🔧 test_ffmpeg_devices.py          # Test audio devices
 ├── 🔧 create_startup_shortcut.py      # Add to Windows startup
 ├── 📚 FFMPEG_RECORDER_README.md       # Detailed FFmpeg recorder docs
 ├── 📚 MANUAL_FILE_SENDER.md           # Manual sender docs
+├── 📚 TRAY_RECORDER_GUIDE.md          # System tray recorder guide
 └── 📁 audio/                          # Output folder for recordings
 ```
 
@@ -115,7 +115,6 @@ ffmpeg -f dshow
 | `start-tray-recorder.bat` | **System tray app** ⭐ | Always-on tray icon with hotkey |
 | `start-ffmpeg-recording.bat` | **Direct recorder** | Command-line recording |
 | `send-files.bat` | **Manual sender** | Send existing files immediately |
-| `test_ffmpeg_devices.py` | **Device test** | Check audio setup |
 | `create_startup_shortcut.py` | **Startup setup** | Add to Windows startup |
 
 ## ✅ **Features**
