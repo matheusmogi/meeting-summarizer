@@ -4,7 +4,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "644fd1d7-08d2-4a98-b249-a695114a7aa0",
+        "path": "your-webhook-id-here",
         "authentication": "basicAuth",
         "options": {
           "binaryPropertyName": "data",
@@ -20,10 +20,10 @@
       ],
       "id": "d084bb00-1b22-41c0-ab49-7d9f89255846",
       "name": "Webhook",
-      "webhookId": "644fd1d7-08d2-4a98-b249-a695114a7aa0",
+      "webhookId": "your-webhook-id-here",
       "credentials": {
         "httpBasicAuth": {
-          "id": "Wbtz3tdEFdidui0J",
+          "id": "your-basic-auth-credential-id",
           "name": "basic credential"
         }
       }
@@ -52,7 +52,7 @@
       "name": "Transcribe a recording",
       "credentials": {
         "googlePalmApi": {
-          "id": "ptafgViIfNGlNiwp",
+          "id": "your-google-gemini-credential-id",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -61,7 +61,7 @@
       "parameters": {
         "pageId": {
           "__rl": true,
-          "value": "https://www.notion.so/N8N-25574da84abd80208de8e5f592afa808",
+          "value": "https://www.notion.so/your-notion-page-id",
           "mode": "url"
         },
         "title": "=Meeting Summary {{ $now.format('dd/MM/yyyy HH:mm') }}",
@@ -95,8 +95,8 @@
       "executeOnce": true,
       "credentials": {
         "notionApi": {
-          "id": "zXxitcXTLLEPiV7h",
-          "name": "N8N connection"
+          "id": "your-notion-credential-id",
+          "name": "Notion API connection"
         }
       }
     },
@@ -111,7 +111,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Summarize this audio-transcribed text, naming the people who said and finishing with highlights and \"next actions\" if needed. \n**Special highlight whenever someone mentions me *Matheus***\n- use emojis where it suits\n- use a human friendly language\n<input>\n {{ $json.candidates[0].content.parts[0].text }}\n</input>\n<example>\nSummary\n- Sean is working in the feature XYZ, and he is blocked by task assigned to John.\n- John will finish his task this afternoon but he needs Matheus review his code first.\n- Mark will work in a PoC about service bus\n\nAtention \n - You need to code review John's task to unblock Sean\n\nTaking Actions\n - Mark will work in PoC\n</example>"
+              "content": "=Summarize this audio-transcribed text, naming the people who said and finishing with highlights and \"next actions\" if needed. \n**Special highlight whenever someone mentions me *[YOUR_NAME]***\n- use emojis where it suits\n- use a human friendly language\n<input>\n {{ $json.candidates[0].content.parts[0].text }}\n</input>\n<example>\nSummary\n- Sean is working in the feature XYZ, and he is blocked by task assigned to John.\n- John will finish his task this afternoon but he needs [YOUR_NAME] review his code first.\n- Mark will work in a PoC about service bus\n\nAttention \n - You need to code review John's task to unblock Sean\n\nTaking Actions\n - Mark will work in PoC\n</example>"
             }
           ]
         },
@@ -129,7 +129,7 @@
       "name": "Message a model",
       "credentials": {
         "anthropicApi": {
-          "id": "Te0yLQo4Jw6A8aaV",
+          "id": "your-anthropic-credential-id",
           "name": "Anthropic account"
         }
       }
@@ -180,11 +180,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "79196b26-283e-46b4-8ab0-720f7f04f9c2",
+  "versionId": "example-version-id",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "f4b942e088e39a7854b9d30242e1195d0faef0b0ff12bf0d2a643a8f7e485603"
+    "templateCredsSetupCompleted": false,
+    "instanceId": "example-instance-id"
   },
-  "id": "EoPhKN3Pq6G3emck",
+  "id": "ExampleWorkflowId",
   "tags": []
 }

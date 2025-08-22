@@ -12,6 +12,8 @@ meeting-recorder/
 ├── 🎙️ tray_recorder.py                # System tray application ⭐
 ├── 🚀 start-tray-recorder.bat         # Tray launcher
 ├── 📚 TRAY_RECORDER_GUIDE.md          # System tray recorder guide
+├── 🔄 n8n-meeting-summarizer-workflow.json # N8N workflow for AI summaries
+├── 📚 N8N-WORKFLOW-SETUP.md           # N8N workflow setup guide
 └── 📁 audio/                          # Output folder for recordings
 ```
 
@@ -81,10 +83,20 @@ ffmpeg -f dshow
 
 ## 🔔 **N8N Webhook Integration**
 
+### **Basic Integration**
 **HTTP POST with Multipart Form Data:**
 - `data` field: Binary WAV file
 - `metadata` field: JSON with file info and timestamps
 - **Authentication**: Basic Auth from config.json
+
+### **AI-Powered Meeting Summaries** 🤖
+This repository includes a complete **N8N workflow** that automatically:
+- **📝 Transcribes** audio using Google Gemini
+- **🤖 Summarizes** meetings using Claude AI
+- **📋 Creates** organized summaries in Notion
+- **🎯 Highlights** action items and mentions
+
+**Setup**: See `N8N-WORKFLOW-SETUP.md` for complete configuration guide.
 
 ## 🛠️ **Main Application**
 
@@ -117,6 +129,7 @@ ffmpeg -f dshow
 ## 📖 **Detailed Documentation**
 
 - **System Tray Recorder**: See `TRAY_RECORDER_GUIDE.md`
+- **N8N AI Workflow**: See `N8N-WORKFLOW-SETUP.md`
 
 ---
 
