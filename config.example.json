@@ -1,0 +1,8 @@
+{
+    "n8n_webhook_url": "https://n8n.mreis.uk/webhook/your-webhook-id",
+    "credentials": {
+        "username": "your-username",
+        "password": "your-password"
+    },
+    "watch_folder": "D:\\study\\AI\\meeting-recorder\\audio"
+}
