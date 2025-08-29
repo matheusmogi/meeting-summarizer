@@ -19,13 +19,14 @@ def create_icon_image(recording=False):
 
 
 class TrayIcon:
-    def __init__(self, recorder, on_start, on_stop, on_test, on_open, on_exit):
+    def __init__(self, recorder, on_start, on_stop, on_test, on_open, on_send_audio, on_exit):
         self.recorder = recorder
         self.icon = None
         self.on_start = on_start
         self.on_stop = on_stop
         self.on_test = on_test
         self.on_open = on_open
+        self.on_send_audio = on_send_audio
         self.on_exit = on_exit
         self.create_icon()
 
@@ -36,6 +37,8 @@ class TrayIcon:
             pystray.Menu.SEPARATOR,
             menuItem('Start Recording (Ctrl+Shift+R)', self.on_start, enabled=lambda item: not self.recorder.recording),
             menuItem('Stop Recording', self.on_stop, enabled=lambda item: self.recorder.recording),
+            pystray.Menu.SEPARATOR,
+            menuItem('Send All Audio Files', self.on_send_audio, enabled=lambda item: not self.recorder.recording),
             pystray.Menu.SEPARATOR,
             menuItem('Test Audio Devices', self.on_test),
             menuItem('Open Audio Folder', self.on_open),

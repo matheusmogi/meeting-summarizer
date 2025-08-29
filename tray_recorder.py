@@ -8,6 +8,7 @@ from config import load_config
 from recorder import Recorder
 from tray_icon import TrayIcon
 from webhook import WebhookUploader
+from audio_sender import AudioSender
 import threading
 import os
 import time
@@ -20,6 +21,7 @@ def main():
 
     recorder = Recorder(audio_folder)
     uploader = WebhookUploader(webhook_url, credentials)
+    audio_sender = AudioSender(webhook_url, credentials, audio_folder)
 
     def on_start(icon=None, item=None):
         recorder.start_recording()
@@ -34,16 +36,45 @@ def main():
             if file_size > 1024:
                 threading.Thread(target=lambda: uploader.upload_file(recorder.recording_file, recorder.force_delete_file), daemon=True).start()
 
-    def on_test(icon=None, item=None):
+    def on_test():
         tray.notify("Audio Test", "Device testing feature was removed for simplicity")
 
-    def on_open(icon=None, item=None):
+    def on_open():
         try:
             os.startfile(str(recorder.audio_folder))
         except Exception as e:
             print(f"Error opening folder: {e}")
 
-    def on_exit(icon=None, item=None):
+    def on_send_audio():
+        """Send all audio files in the folder to n8n for processing"""
+        def send_files_background():
+            try:
+                tray.notify("Audio Sender", "Starting to send audio files...")
+                results = audio_sender.send_all_files(
+                    recursive=False,
+                    delete_after_upload=True,
+                    delay_between_uploads=1,  # 1 second delay to avoid overwhelming n8n
+                    auto_confirm=True  # Skip user confirmation for tray usage
+                )
+                
+                # Show results notification
+                if results['total'] == 0:
+                    tray.notify("Audio Sender", "No audio files found to send")
+                elif results['failed'] == 0:
+                    tray.notify("Audio Sender Complete", 
+                               f"Successfully sent {results['successful']} audio files")
+                else:
+                    tray.notify("Audio Sender Complete", 
+                               f"Sent {results['successful']}/{results['total']} files successfully")
+                
+            except Exception as e:
+                print(f"Error in audio sender: {e}")
+                tray.notify("Audio Sender Error", f"Failed to send files: {str(e)}")
+        
+        # Run in background thread to avoid blocking the UI
+        threading.Thread(target=send_files_background, daemon=True).start()
+
+    def on_exit():
         if recorder.recording:
             recorder.stop_recording()
             time.sleep(2)
@@ -55,6 +86,7 @@ def main():
         on_stop=on_stop,
         on_test=on_test,
         on_open=on_open,
+        on_send_audio=on_send_audio,
         on_exit=on_exit
     )
     recorder.icon = tray

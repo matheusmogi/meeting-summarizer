@@ -12,8 +12,8 @@ class Recorder:
         self.ffmpeg_process = None
         self.recording_file = None
         self.audio_folder = Path(audio_folder)
-        self.icon = icon
         self.audio_folder.mkdir(parents=True, exist_ok=True)
+        self.icon = icon
 
     def force_delete_file(self, file_path):
         if not os.path.exists(file_path):
